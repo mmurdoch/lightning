@@ -1,6 +1,6 @@
 # Lightning
 
-Lightning is a mental math trainer.
+Lightning is a cross-platform desktop mental math trainer.
 
 ### Building
 
