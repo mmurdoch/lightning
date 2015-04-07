@@ -1,0 +1,23 @@
+/* Color scheme: #3C4C66 #CADDFF #666563 #B2AC9F #7C90B2 */
+body {
+  margin: 0px;
+}
+
+#content {
+  margin-left: 8px;
+}
+
+.category {
+  background-color: #A8BFCC;
+  border: 1px;
+  display: inline-block;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 10pt;
+  margin: 8px 8px 0px 0px;
+  padding: 0.4em 0.5em;
+}
+
+.category:hover {
+  background: #7C9FB2;
+  cursor: pointer;
+}

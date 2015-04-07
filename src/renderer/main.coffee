@@ -1,24 +1,24 @@
 Multiplication = require './multiplication'
 Category = require './multiplication-category'
 
-print = (elementName, textContent) ->
+addElement = (elementName, elementClass, textContent) ->
   element = document.createElement elementName
+  element.setAttribute('class', elementClass)
   element.innerText = textContent
-  document.body.appendChild element
+  content = document.getElementById('content')
+  content.appendChild element
 
-printMultiplication = (multiplication) ->
-  print('p', multiplication.multiplier + ' x ' + multiplication.multiplicand)
+addCategoryButton = (categoryName, onclick) ->
+  element = addElement 'a', 'category', categoryName
+  element.addEventListener 'click', onclick
 
-printMultiplications = (arrayName, multiplications, printAll) ->
-  print('h1', arrayName + ': ' + multiplications.length)
-  if printAll
-    multiplications.map(printMultiplication, this)
+onCategoryButtonClick = (event) ->
+  console.log 'clicked ' + event.target.innerText
 
 multiplications = Multiplication.multiplications(100, 100)
-Category.all().map((c) ->
-  printMultiplications(c.name, multiplications.inCategory(c)))
+Category.all().map((c) -> addCategoryButton c.name, onCategoryButtonClick)
+addCategoryButton('uncategorized', onCategoryButtonClick)
 
-printMultiplications("uncategorized", multiplications.uncategorized(), true)
 # NeDB
 Datastore = require('nedb')
 db = new Datastore({ filename: 'lightning.db', autoload: true })
