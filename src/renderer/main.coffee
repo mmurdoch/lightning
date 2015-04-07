@@ -19,3 +19,15 @@ Category.all().map((c) ->
   printMultiplications(c.name, multiplications.inCategory(c)))
 
 printMultiplications("uncategorized", multiplications.uncategorized(), true)
+# NeDB
+Datastore = require('nedb')
+db = new Datastore({ filename: 'lightning.db', autoload: true })
+
+for i in [1..10]
+  doc = { hello: 'world', n: i }
+
+  db.insert(doc)
+
+db.find({ hello: 'world' }, (err, docs) ->
+  docs.map((doc) -> console.log doc.n + ' (' + doc._id + ')')
+)
