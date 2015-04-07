@@ -1,3 +1,7 @@
+Lightning specific source code is released into the public domain.
+
+Lightning depends on atom-shell-starter, which is licensed as follows:
+
 Copyright (c) 2014 Paul Betts
 
 Permission is hereby granted, free of charge, to any person obtaining
