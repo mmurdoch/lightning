@@ -2,58 +2,54 @@ Multiplication = require './multiplication'
 Category = require './multiplication-category'
 $ = require './jquery-1.11.2.min.js'
 
-contentElement = ->
-  content = document.getElementById('content')
-
-addElement = (elementName, elementClass, textContent) ->
-  element = document.createElement elementName
-  element.setAttribute('class', elementClass)
-  element.innerText = textContent if textContent
-  contentElement().appendChild element
-
-addCategoryButton = (categoryName, onclick) ->
-  element = addElement 'a', 'category', categoryName
-  element.addEventListener 'click', onclick
-
-onCategoryButtonClick = (event) ->
-  while contentElement().hasChildNodes()
-    contentElement().removeChild contentElement().lastChild
-
-  addQuestion()
-  addAnswer()
+content = ->
+  $('#content')
 
 question = ->
   $('.question')
 
-addQuestion = ->
-  addElement 'div', 'question', 'Press any key to start'
-
 answer = ->
   $('.answer')
 
+toId = (string) ->
+  string.replace(' ', '-')
+
+addCategoryButton = (categoryName) ->
+  categoryId = toId(categoryName)
+  content().append(
+    $('<a id="' + categoryId + '" class="category">' + categoryName + '</a>'))
+  $('#' + categoryId).click onCategoryButtonClick
+
+onCategoryButtonClick = (event) ->
+  content().empty()
+  addQuestion()
+  addAnswer()
+
+addQuestion = ->
+  content().append($('<div class="question">Press any key to start</div>'))
+
 addAnswer = ->
-  answer = addElement 'input', 'answer'
-  answer.setAttribute 'type', 'text'
-  answer.focus()
+  content().append($('<input type="text" class="answer"/>'))
+  answer().focus()
+  answer().keypress startQuestions
 
   # Then first question appears
   # Listen to key presses, waiting until correct answer given
   # Then disable all key presses, show success, wait for a second
   # Then move to next question
-  $('.answer').keypress startQuestions
 
 answerCheckerId = null
 
 startQuestions = (event) ->
   event.preventDefault()
-  $('.question').text('17 x 87')
-  $('.answer').off('keypress')
-  $('.answer').keypress allowDigitsOnly
+  question().text('17 x 87')
+  answer().off('keypress')
+  answer().keypress allowDigitsOnly
   answerCheckerId = setInterval checkAnswer, 100
 
 checkAnswer = ->
-  if $('.answer').val() is '1'
-    $('.question').text('Correct!')
+  if answer().val() is '1'
+    question().text('Correct!')
     clearInterval answerCheckerId
 
 allowDigitsOnly = (event) ->
@@ -69,8 +65,8 @@ digits = ->
   zeroToNine
 
 multiplications = Multiplication.multiplications(100, 100)
-Category.all().map((c) -> addCategoryButton c.name, onCategoryButtonClick)
-addCategoryButton 'uncategorized', onCategoryButtonClick
+Category.all().map((c) -> addCategoryButton c.name)
+addCategoryButton 'uncategorized'
 
 # NeDB
 #Datastore = require 'nedb'
