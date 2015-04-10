@@ -22,24 +22,51 @@ onCategoryButtonClick = (event) ->
   addQuestion()
   addAnswer()
 
+question = ->
+  $('.question')
+
 addQuestion = ->
-  addElement 'div', 'question', 'Press any number to start'
+  addElement 'div', 'question', 'Press any key to start'
+
+answer = ->
+  $('.answer')
 
 addAnswer = ->
   answer = addElement 'input', 'answer'
   answer.setAttribute 'type', 'text'
   answer.focus()
-  $('.answer').keypress((event) ->
-    digits = []
-    key = event.which
-    console.log(key)
 
-    for i in [48..58]
-      digits.push(i)
+  # Then first question appears
+  # Listen to key presses, waiting until correct answer given
+  # Then disable all key presses, show success, wait for a second
+  # Then move to next question
+  $('.answer').keypress startQuestions
 
-    if !(digits.indexOf(key) >= 0)
-      event.preventDefault()
-  )
+answerCheckerId = null
+
+startQuestions = (event) ->
+  event.preventDefault()
+  $('.question').text('17 x 87')
+  $('.answer').off('keypress')
+  $('.answer').keypress allowDigitsOnly
+  answerCheckerId = setInterval checkAnswer, 100
+
+checkAnswer = ->
+  if $('.answer').val() is '1'
+    $('.question').text('Correct!')
+    clearInterval answerCheckerId
+
+allowDigitsOnly = (event) ->
+  key = event.which
+
+  if !(digits().indexOf(key) >= 0)
+    event.preventDefault()
+
+digits = ->
+  zeroToNine = []
+  for i in [48..58]
+    zeroToNine.push(i)
+  zeroToNine
 
 multiplications = Multiplication.multiplications(100, 100)
 Category.all().map((c) -> addCategoryButton c.name, onCategoryButtonClick)
