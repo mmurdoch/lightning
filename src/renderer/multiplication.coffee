@@ -130,13 +130,14 @@ class Multiplication
     @multiplier <= 20 and @multiplicand <= 20
 
   # Whether or not this multiplication is between two integers which are close
-  # to one hundred (i.e. greater than or equal to eighty).
+  # to one hundred (i.e. greater than or equal to ninety and less than or
+  # equal to one hundred and ten).
   #
   # Returns {Boolean}, true if this multiplication is close to one hundred,
   # false otherwise
-  # TODO This needs to check upper bounds too (and update above description)
   isCloseToOneHundred: ->
-    @multiplier >= 80 and @multiplicand >= 80
+    @multiplier >= 90 and @multiplicand >= 90 and
+      @multiplier <= 110 and @multiplicand <= 110
 
   # Whether or not this multiplication contains at least one number which can
   # be factorized into single digit integers.

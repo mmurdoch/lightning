@@ -10,4 +10,4 @@ describe "Lightning", ->
     it "can filter multiplications", ->
       expect(tablesTo100.inCategory(Category.byOne()).length).toBe 199
     it "can filter to multiplications which are uncategorized", ->
-      expect(tablesTo100.uncategorized().length).toBe 2245
+      expect(tablesTo100.uncategorized().length).toBe 2401

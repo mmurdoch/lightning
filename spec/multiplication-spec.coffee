@@ -21,6 +21,11 @@ describe "Lightning", ->
       expect(new Multiplication(21, 61).hasSingleDigitFactors()).toBe true
       expect(new Multiplication(71, 51).hasSingleDigitFactors()).toBe false
       expect(new Multiplication(71, 53).hasSingleDigitFactors()).toBe false
+    it "can determine whether it is close to one hundred", ->
+      expect(new Multiplication(90, 92).isCloseToOneHundred()).toBe true
+      expect(new Multiplication(89, 99).isCloseToOneHundred()).toBe false
+      expect(new Multiplication(110, 110).isCloseToOneHundred()).toBe true
+      expect(new Multiplication(200, 200).isCloseToOneHundred()).toBe false
     it "can be categorized", ->
       multiplication = new Multiplication(56, 11, [Category.byEleven()])
       expect(multiplication.isInCategory(Category.byEleven())).toBe true
