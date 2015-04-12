@@ -98,15 +98,15 @@ class Ui
   allowDigitsOnly: (event) ->
     key = event.which
 
-    if !(@digits().indexOf(key) >= 0)
+    if !(@digitKeyCodes().indexOf(key) >= 0)
       event.preventDefault()
 
-  # The digits from 0 to 9
+  # The key codes of the digits 0 to 9
   #
-  # Returns an {Array} of {Numbers} containing the digits 0 to 9.
-  digits: ->
+  # Returns an {Array} of {Numbers} containing the key codes of digits 0 to 9.
+  digitKeyCodes: ->
     zeroToNine = []
-    for i in [48..58]
+    for i in [48..57]
       zeroToNine.push(i)
     zeroToNine
 
